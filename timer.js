@@ -68,8 +68,8 @@ TimerWidget.prototype = {
 
             for (let i = 0; i < 60; i++) {
                 const angle = Math.TAU / 60 * i;
-                const start = (i % 12 == 0) ? size * 0.41 : size * 0.43;
-                const end = (i % 12 == 0) ? size * 0.47 : size * 0.45;
+                const start = (i % 12 == 0) ? size * 0.40 : size * 0.42;
+                const end = (i % 12 == 0) ? size * 0.46 : size * 0.44;
                 const mark = this._marks[i];
                 mark.setAttribute('x1', box.width / 2 + Math.cos(angle) * start);
                 mark.setAttribute('y1', box.height / 2 - Math.sin(angle) * start);
@@ -92,13 +92,13 @@ TimerWidget.prototype = {
                 const delta_1 = this._angle_diff(angle, Math.TAU / 60000 * this._time);
                 const delta_2 = this._angle_diff(angle, Math.TAU / 1000 * this._time);
                 const start = Math.min(
-                    (i % 12 == 0) ? size * 0.41 : size * 0.43,
-                    size * (0.40 + 0.12 * Math.abs(delta_2)),
-                    size * (0.415 + 0.12 * Math.abs(delta_1)),
+                    (i % 12 == 0) ? size * 0.40 : size * 0.42,
+                    size * (0.39 + 0.15 * Math.abs(delta_2)),
+                    size * (0.405 + 0.15 * Math.abs(delta_1)),
                 );
                 const end = Math.max(
-                    (i % 12 == 0) ? size * 0.47 : size * 0.45,
-                    size * (0.49 - 0.12 * Math.abs(delta_1)),
+                    (i % 12 == 0) ? size * 0.46 : size * 0.44,
+                    size * (0.49 - 0.18 * Math.abs(delta_1)),
                 );
                 const mark = this._marks[i];
                 mark.setAttribute('x1', box.width / 2 + Math.cos(angle) * start);
