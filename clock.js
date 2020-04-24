@@ -1,13 +1,13 @@
 "use strict";
 
-function ClockWidget (element, show_seconds) {
+function ClockWidget (element, options) {
     this._element = element;
-    this._show_seconds = show_seconds;
+    this._show_seconds = options.show_seconds;
     this._show_and_loop();
 }
 
-ClockWidget.setup = function(element, show_seconds) {
-    element._clock_widget = new ClockWidget(element, show_seconds);
+ClockWidget.setup = function(element, options) {
+    element._clock_widget = new ClockWidget(element, options);
 }
 
 ClockWidget.prototype = {

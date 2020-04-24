@@ -1,7 +1,8 @@
 "use strict";
 
-function TimerWidget (element) {
+function TimerWidget (element, options) {
     this._element = element;
+    this._color = options.color;
     this._time = null;
     this._last_update = null;
     this._interval_id = null;
@@ -12,8 +13,8 @@ function TimerWidget (element) {
     this._element.addEventListener('click', this._on_click.bind(this));
 }
 
-TimerWidget.setup = function(element) {
-    element._timer_widget = new TimerWidget(element);
+TimerWidget.setup = function(element, options) {
+    element._timer_widget = new TimerWidget(element, options);
 }
 
 TimerWidget.prototype = {
@@ -23,7 +24,7 @@ TimerWidget.prototype = {
         this._marks = [];
         for (let i = 0; i < 60; i++) {
             const mark = document.createElementNS(this.SVG_NS, 'line');
-            mark.style.stroke = 'white';
+            mark.style.stroke = this._color;
             mark.style.strokeWidth = 3;
             mark.style.strokeLinecap = 'round';
             this._element.appendChild(mark);
@@ -32,7 +33,7 @@ TimerWidget.prototype = {
 
         this._text_group = document.createElementNS(this.SVG_NS, 'text');
         this._text_group.id = 'analog-time-text';
-        this._text_group.style.fill = 'white';
+        this._text_group.style.fill = this._color;
         this._text1 = document.createElementNS(this.SVG_NS, 'tspan');
         this._text1.id = 'analog-time-text-coarse';
         this._text_group.appendChild(this._text1);

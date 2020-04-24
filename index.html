@@ -22,8 +22,8 @@ function formatDozenal(number, digits) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    ClockWidget.setup(document.getElementById('digital-clock'), false);
-    TimerWidget.setup(document.getElementById('stopwatch'));
+    ClockWidget.setup(document.getElementById('digital-clock'), {show_seconds: false});
+    TimerWidget.setup(document.getElementById('stopwatch'), {color: '#ffffff'});
 });
 </script>
 </head>
