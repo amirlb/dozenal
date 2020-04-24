@@ -32,15 +32,17 @@ TimerWidget.prototype = {
         }
 
         this._text_group = document.createElementNS(this.SVG_NS, 'text');
-        this._text_group.id = 'analog-time-text';
+        this._text_group.classList.add('timer-time-display');
         this._text_group.style.fill = this._color;
         this._text1 = document.createElementNS(this.SVG_NS, 'tspan');
-        this._text1.id = 'analog-time-text-coarse';
         this._text_group.appendChild(this._text1);
         this._text2 = document.createElementNS(this.SVG_NS, 'tspan');
-        this._text2.id = 'analog-time-text-fine';
         this._text_group.appendChild(this._text2);
         this._element.appendChild(this._text_group);
+
+        this._play_button = document.createElementNS(this.SVG_NS, 'polygon');
+        this._play_button.style.stroke = 'none';
+        this._element.appendChild(this._play_button);
     },
 
     _update_display: function() {
@@ -53,6 +55,15 @@ TimerWidget.prototype = {
         this._text2.setAttribute('font-size', size * 0.06);
 
         if (this._time === null) {
+            const play_button_points = [
+                [box.width * 0.5 - size * 0.06, box.height * 0.5 + size * 0.10],
+                [box.width * 0.5 - size * 0.06, box.height * 0.5 - size * 0.10],
+                [box.width * 0.5 + size * 0.12, box.height * 0.5],
+            ]
+            this._play_button.setAttribute('points',
+                play_button_points.map(function([x,y]) {return `${x},${y}`;}).join(' '));
+            this._play_button.style.fill = this._color;
+
             this._text1.innerHTML = '';
             this._text2.innerHTML = '';
 
@@ -68,6 +79,8 @@ TimerWidget.prototype = {
                 mark.style.strokeOpacity = 0.5;
             }
         } else {
+            this._play_button.style.fill = 'none';
+
             const minutes = Math.trunc(this._time / 60000);
             const seconds = Math.trunc(this._time / 1000) % 60;
             const millis = Math.trunc((this._time % 1000) * 0.144);
@@ -127,14 +140,12 @@ TimerWidget.prototype = {
         }
     },
 
-    stop: function() {
-        if (this._interval_id !== null) {
-            window.clearInterval(this._interval_id);
-            this._interval_id = null;
+    stop_if_paused: function() {
+        if (this._interval_id === null) {
+            this._last_update = null;
+            this._time = null;
+            this._update_display();
         }
-        this._last_update = null;
-        this._time = null;
-        this._update_display();
     },
 
     _on_click: function() {

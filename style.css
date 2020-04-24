@@ -37,6 +37,6 @@ body {
     height: 100%;
 }
 
-#analog-time-text {
+#widget-analog .timer-time-display {
     font-family: 'Fira Mono', monospace;
 }

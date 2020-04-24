@@ -24,6 +24,10 @@ function formatDozenal(number, digits) {
 document.addEventListener('DOMContentLoaded', function() {
     ClockWidget.setup(document.getElementById('digital-clock'), {show_seconds: false});
     TimerWidget.setup(document.getElementById('stopwatch'), {color: '#ffffff'});
+    document.getElementById('stopwatch-icon').addEventListener('click', function() {
+        const timer = document.getElementById('stopwatch')._timer_widget;
+        timer.stop_if_paused();
+    });
 });
 </script>
 </head>
@@ -33,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <span id="digital-clock"></span>
     </div>
     <div class="widget-box" id="widget-analog">
-        <h1>Timer ⏱️</h1>
+        <h1>Timer <span id="stopwatch-icon">⏱️</span></h1>
         <svg id="stopwatch"></svg>
     </div>
 </body>
