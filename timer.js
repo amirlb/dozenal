@@ -25,7 +25,6 @@ TimerWidget.prototype = {
         for (let i = 0; i < 60; i++) {
             const mark = document.createElementNS(this.SVG_NS, 'line');
             mark.style.stroke = this._color;
-            mark.style.strokeWidth = 3;
             mark.style.strokeLinecap = 'round';
             this._element.appendChild(mark);
             this._marks.push(mark);
@@ -69,13 +68,14 @@ TimerWidget.prototype = {
 
             for (let i = 0; i < 60; i++) {
                 const angle = Math.TAU / 60 * i;
-                const start = (i % 12 == 0) ? size / 2 - 37 : size / 2 - 30;
-                const end = (i % 12 == 0) ? size / 2 - 15 : size / 2 - 22;
+                const start = (i % 12 == 0) ? size * 0.41 : size * 0.43;
+                const end = (i % 12 == 0) ? size * 0.47 : size * 0.45;
                 const mark = this._marks[i];
                 mark.setAttribute('x1', box.width / 2 + Math.cos(angle) * start);
                 mark.setAttribute('y1', box.height / 2 - Math.sin(angle) * start);
                 mark.setAttribute('x2', box.width / 2 + Math.cos(angle) * end);
                 mark.setAttribute('y2', box.height / 2 - Math.sin(angle) * end);
+                mark.style.strokeWidth = size * 0.008;
                 mark.style.strokeOpacity = 0.5;
             }
         } else {
@@ -92,19 +92,20 @@ TimerWidget.prototype = {
                 const delta_1 = this._angle_diff(angle, Math.TAU / 60000 * this._time);
                 const delta_2 = this._angle_diff(angle, Math.TAU / 1000 * this._time);
                 const start = Math.min(
-                    (i % 12 == 0) ? size / 2 - 37 : size / 2 - 30,
-                    size / 2 - 42 + 50 * Math.abs(delta_2),
-                    size / 2 - 35 + 50 * Math.abs(delta_1),
+                    (i % 12 == 0) ? size * 0.41 : size * 0.43,
+                    size * (0.40 + 0.12 * Math.abs(delta_2)),
+                    size * (0.415 + 0.12 * Math.abs(delta_1)),
                 );
                 const end = Math.max(
-                    (i % 12 == 0) ? size / 2 - 15 : size / 2 - 22,
-                    size / 2 - 8 - 50 * Math.abs(delta_1),
+                    (i % 12 == 0) ? size * 0.47 : size * 0.45,
+                    size * (0.49 - 0.12 * Math.abs(delta_1)),
                 );
                 const mark = this._marks[i];
                 mark.setAttribute('x1', box.width / 2 + Math.cos(angle) * start);
                 mark.setAttribute('y1', box.height / 2 - Math.sin(angle) * start);
                 mark.setAttribute('x2', box.width / 2 + Math.cos(angle) * end);
                 mark.setAttribute('y2', box.height / 2 - Math.sin(angle) * end);
+                mark.style.strokeWidth = size * 0.008;
                 mark.style.strokeOpacity = delta_1 < 0 ? 0.5
                     : Math.max(0.5, 1 - delta_1 * 1.2);
             }
