@@ -1,0 +1,41 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-box {
+    margin: 1em;
+    padding: 2em;
+    background-color: lightskyblue;
+    color: white;
+    text-align: center;
+}
+.widget-box:not(:first-child) {
+    margin-top: 0;
+}
+
+#digital-clock {
+    font-family: 'Fira Mono', monospace;
+    font-size: 5em;
+}
+
+#widget-analog {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+#widget-analog > svg {
+    width: 100%;
+    height: 100%;
+}
+
+#analog-time-text {
+    font-family: 'Fira Mono', monospace;
+}

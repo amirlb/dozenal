@@ -3,49 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
-<style>
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-.widget-box {
-    margin: 1em;
-    padding: 2em;
-    background-color: lightskyblue;
-    color: white;
-    text-align: center;
-}
-.widget-box:not(:first-child) {
-    margin-top: 0;
-}
-
-#widget-analog {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-#widget-analog > svg {
-    width: 100%;
-    height: 100%;
-}
-
-#digital-time {
-    font-family: 'Fira Mono', monospace;
-    font-size: 5em;
-}
-
-#analog-time-text {
-    font-family: 'Fira Mono', monospace;
-}
-</style>
+<link href="style.css" rel="stylesheet">
+<script src="clock.js"></script>
+<script src="timer.js"></script>
 <script>
 "use strict";
 
@@ -54,123 +14,27 @@ Math.TAU = Math.PI * 2;
 function formatDozenal(number, digits) {
     const DIGITS = 'O123456789XԐ';
     let fmt = '';
-    while (digits --> 0) {
+    while (digits --> 0 || number) {
         fmt = DIGITS[number % 12] + fmt;
         number = Math.floor(number / 12);
     }
     return fmt;
 }
 
-function updateDigitalTime() {
-    const now = new Date();
-    document.getElementById('digital-time').innerText = 
-        `${formatDozenal(now.getHours(), 2)}:${formatDozenal(now.getMinutes(), 2)}`;
-    const millisecondsInMinute = now.getSeconds()*1000 + now.getMilliseconds();
-    setTimeout(updateDigitalTime, 60*1000 - millisecondsInMinute);
-}
-
-// function updateDigitalTime() {
-//     const now = new Date();
-//     document.getElementById('digital-time').innerText = 
-//         `${formatDozenal(now.getHours(), 2)}:${formatDozenal(now.getMinutes(), 2)}:${formatDozenal(now.getSeconds(), 2)}`;
-//     const millisecondsInSecond = now.getMilliseconds();
-//     setTimeout(updateDigitalTime, 1000 - millisecondsInSecond);
-// }
-
-let lines = [];
-
-function setupAnalogTime() {
-    const svg = document.getElementById('analog-time');
-    const box = svg.getBoundingClientRect();
-    const size = Math.min(box.width, box.height);
-    for (let i = 0; i < 60; i++) {
-        const angle = Math.TAU / 60 * i;
-        let start = (i % 12 == 0) ? size / 2 - 37 : size / 2 - 30;
-        let end = (i % 12 == 0) ? size / 2 - 15 : size / 2 - 22;
-        const line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
-        line.setAttribute('x1', box.width / 2 + Math.cos(angle) * start);
-        line.setAttribute('y1', box.height / 2 - Math.sin(angle) * start);
-        line.setAttribute('x2', box.width / 2 + Math.cos(angle) * end);
-        line.setAttribute('y2', box.height / 2 - Math.sin(angle) * end);
-        line.style.stroke = 'white';
-        line.style.strokeOpacity = 0.5;
-        line.style.strokeWidth = 3;
-        line.style.strokeLinecap = 'round';
-        svg.appendChild(line);
-        lines.push(line);
-    }
-
-    const text_group = document.createElementNS("http://www.w3.org/2000/svg", 'text');
-    text_group.id = 'analog-time-text';
-    text_group.setAttribute('x', box.width * 0.5 - size * 0.25);
-    text_group.setAttribute('y', box.height * 0.5 + size * 0.05);
-    text_group.style.fill = 'white';
-    const text1 = document.createElementNS("http://www.w3.org/2000/svg", 'tspan');
-    text1.id = 'analog-time-text-coarse';
-    text1.setAttribute('font-size', size * 0.12);
-    text_group.appendChild(text1);
-    const text2 = document.createElementNS("http://www.w3.org/2000/svg", 'tspan');
-    text2.id = 'analog-time-text-fine';
-    text2.setAttribute('font-size', size * 0.06);
-    text_group.appendChild(text2);
-    svg.appendChild(text_group);
-}
-
-function updateAnalogTime() {
-    const now = new Date();
-    const millisecondsInMinute = now.getSeconds()*1000 + now.getMilliseconds();
-    const angle = Math.TAU / 60000 * millisecondsInMinute;
-    const svg = document.getElementById('analog-time');
-    const box = svg.getBoundingClientRect();
-    const size = Math.min(box.width, box.height);
-    for (let i = 0; i < 60; i++) {
-        const angle = Math.TAU / 60 * i;
-        let start = (i % 12 == 0) ? size / 2 - 37 : size / 2 - 30;
-        let end = (i % 12 == 0) ? size / 2 - 15 : size / 2 - 22;
-        const line = lines[i];
-        const totalMillisecondsDiff = (millisecondsInMinute - i*1000 + 60000) % 60000;
-        const millisecondsDiff = (now.getMilliseconds() - i*1000/60 + 1000) % 1000;
-        const millisecondsAbsDiff = Math.min(millisecondsDiff, 1000 - millisecondsDiff);
-        const secondsDiff = (millisecondsInMinute - i*1000 + 60000) % 60000 / 1000;
-        const secondsAbsDiff = Math.min(secondsDiff, 60 - secondsDiff);
-        start -= Math.max(0, 12 - 0.015 * Math.pow(millisecondsAbsDiff, 2));
-        end += Math.max(0, 12 - 2 * Math.pow(secondsAbsDiff, 2));
-        line.setAttribute('x1', box.width / 2 + Math.cos(angle) * start);
-        line.setAttribute('y1', box.height / 2 - Math.sin(angle) * start);
-        line.setAttribute('x2', box.width / 2 + Math.cos(angle) * end);
-        line.setAttribute('y2', box.height / 2 - Math.sin(angle) * end);
-        line.style.strokeOpacity = Math.max(0.5, 1 - totalMillisecondsDiff / 10000);
-    }
-
-    const text_group = svg.getElementById('analog-time-text');
-    text_group.setAttribute('x', box.width * 0.5 - size * 0.25);
-    text_group.setAttribute('y', box.height * 0.5 + size * 0.05);
-    const text1 = svg.getElementById('analog-time-text-coarse');
-    text1.setAttribute('font-size', size * 0.12);
-    text1.innerHTML = `${formatDozenal(now.getMinutes()%3, 2)}:${formatDozenal(now.getSeconds(), 2)}`;
-    const text2 = svg.getElementById('analog-time-text-fine');
-    text2.setAttribute('font-size', size * 0.06);
-    text2.innerHTML = `.${formatDozenal(Math.trunc(now.getMilliseconds()*0.144), 2)}`;
-}
-
-function main() {
-    updateDigitalTime();
-    setupAnalogTime();
-    setInterval(updateAnalogTime, 20);
-}
-
-document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', function() {
+    ClockWidget.setup(document.getElementById('digital-clock'), false);
+    TimerWidget.setup(document.getElementById('stopwatch'));
+});
 </script>
 </head>
 <body>
     <div class="widget-box">
         <h1>Digital clock</h1>
-        <span id="digital-time"></span>
+        <span id="digital-clock"></span>
     </div>
     <div class="widget-box" id="widget-analog">
-        <h1>Timer</h1>
-        <svg id="analog-time">
-    </svg>
-</div>
+        <h1>Timer ⏱️</h1>
+        <svg id="stopwatch"></svg>
+    </div>
 </body>
 </html>
