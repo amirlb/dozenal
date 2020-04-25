@@ -86,6 +86,7 @@
                     x: e.touches[0].screenX,
                     y: e.touches[0].screenY,
                 };
+                alert([swipe_now.x, swipe_then.x]);
 
                 if (swipe_now.time > swipe_then.time + 200000) {
                     return;
