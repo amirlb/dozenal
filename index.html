@@ -23,7 +23,7 @@ function formatDozenal(number, digits) {
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('clock').checked = true;
-    const clock_widget = new ClockWidget(document.getElementById('digital-clock'), {show_seconds: false});
+    const clock_widget = new ClockWidget(document.getElementById('digital-clock'));
     const timer_widget = new TimerWidget(document.getElementById('stopwatch'), {color: 'white'});
     document.getElementById('clock').addEventListener('change', function() {
         document.getElementById('tab-clock').classList.remove('hidden');

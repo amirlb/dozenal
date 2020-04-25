@@ -1,24 +1,30 @@
 "use strict";
 
-function ClockWidget (element, options) {
+function ClockWidget (element) {
     this._element = element;
-    this._show_seconds = options.show_seconds;
+    this._init();
     this._show_and_loop();
 }
 
 ClockWidget.prototype = {
+    _init: function() {
+        this._coarse_time = document.createElement('span');
+        this._coarse_time.classList.add('minutes');
+        this._element.appendChild(this._coarse_time);
+        this._fine_time = document.createElement('span');
+        this._fine_time.classList.add('seconds');
+        this._element.appendChild(this._fine_time);
+    },
+
     _show_and_loop: function() {
         const now = new Date();
-        const text = this._show_seconds
-            ? `${formatDozenal(now.getHours(), 2)}:${formatDozenal(now.getMinutes(), 2)}:${formatDozenal(now.getSeconds(), 2)}`
-            : `${formatDozenal(now.getHours(), 2)}:${formatDozenal(now.getMinutes(), 2)}`;
-        const millisecondsInMinute = now.getSeconds()*1000 + now.getMilliseconds();
-        const period = this._show_seconds ? 1000 : 60*1000;
-        const millisecondsLeft = period - millisecondsInMinute % period;
-        this._element.innerText = text;
+        this._coarse_time.innerText =
+            `${formatDozenal(now.getHours(), 1)}:${formatDozenal(now.getMinutes(), 2)}`;
+        this._fine_time.innerText =
+            `:${formatDozenal(now.getSeconds(), 2)}`;
         window.setTimeout(
             function (self) {self._show_and_loop()},
-            millisecondsLeft,
+            1000 - now.getMilliseconds(),
             this,
         );
     }

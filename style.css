@@ -43,7 +43,12 @@ input[type="radio"][name="tab"]:checked + label {
 #tab-clock {
     color: white;
     font-family: 'Fira Mono', monospace;
+}
+#tab-clock .minutes {
     font-size: 16vw;
+}
+#tab-clock .seconds {
+    font-size: 12vw;
 }
 #tab-clock:not(.hidden) {
     display: flex;
