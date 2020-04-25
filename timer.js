@@ -1,6 +1,6 @@
 "use strict";
 
-function TimerWidget (element, options) {
+function TimerWidget(element, options) {
     this._element = element;
     this._color = options.color;
     this._time = null;
@@ -16,7 +16,7 @@ function TimerWidget (element, options) {
 TimerWidget.prototype = {
     SVG_NS: 'http://www.w3.org/2000/svg',
 
-    _init_drawing: function() {
+    _init_drawing: function () {
         this._marks = [];
         for (let i = 0; i < 60; i++) {
             const mark = document.createElementNS(this.SVG_NS, 'line');
@@ -40,7 +40,7 @@ TimerWidget.prototype = {
         this._element.appendChild(this._play_button);
     },
 
-    update_display: function() {
+    update_display: function () {
         const box = this._element.getBoundingClientRect();
         const size = Math.min(box.width, box.height);
 
@@ -56,7 +56,7 @@ TimerWidget.prototype = {
                 [box.width * 0.5 + size * 0.12, box.height * 0.5],
             ]
             this._play_button.setAttribute('points',
-                play_button_points.map(function([x,y]) {return `${x},${y}`;}).join(' '));
+                play_button_points.map(function ([x, y]) { return `${x},${y}`; }).join(' '));
             this._play_button.style.fill = this._color;
 
             this._text1.innerHTML = '';
@@ -109,18 +109,18 @@ TimerWidget.prototype = {
     },
 
     // Returns -TAU/2 <= x <= TAU/2 such that b = a + x (mod TAU)
-    _angle_diff: function(a, b) {
+    _angle_diff: function (a, b) {
         return ((b - a) % Math.TAU + Math.TAU * 1.5) % Math.TAU - Math.TAU * 0.5;
     },
 
-    _update_time_and_display: function() {
+    _update_time_and_display: function () {
         const now = Date.now();
         this._time += now - this._last_update;
         this._last_update = now;
         this.update_display();
     },
 
-    play: function() {
+    play: function () {
         this._last_update = Date.now();
         if (this._time === null) {
             this._time = 0;
@@ -129,7 +129,7 @@ TimerWidget.prototype = {
         this.update_display();
     },
 
-    pause: function() {
+    pause: function () {
         if (this._interval_id !== null) {
             window.clearInterval(this._interval_id);
             this._interval_id = null;
@@ -137,7 +137,7 @@ TimerWidget.prototype = {
         }
     },
 
-    stop: function() {
+    stop: function () {
         if (this._interval_id !== null) {
             window.clearInterval(this._interval_id);
             this._interval_id = null;
@@ -147,7 +147,7 @@ TimerWidget.prototype = {
         this.update_display();
     },
 
-    _on_click: function() {
+    _on_click: function () {
         if (this._interval_id === null) {
             this.play();
         } else {

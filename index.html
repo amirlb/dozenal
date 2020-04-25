@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8"/>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
-<link href="style.css" rel="stylesheet">
-<script src="clock.js"></script>
-<script src="timer.js"></script>
-<script>
-"use strict";
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="clock.js"></script>
+    <script src="timer.js"></script>
+    <script>
+        "use strict";
 
-Math.TAU = Math.PI * 2;
+        Math.TAU = Math.PI * 2;
 
-function formatDozenal(number, digits) {
-    const DIGITS = 'O123456789XԐ';
-    let fmt = '';
-    while (digits --> 0 || number) {
-        fmt = DIGITS[number % 12] + fmt;
-        number = Math.floor(number / 12);
-    }
-    return fmt;
-}
+        function formatDozenal(number, digits) {
+            const DIGITS = 'O123456789XԐ';
+            let fmt = '';
+            while (digits-- > 0 || number) {
+                fmt = DIGITS[number % 12] + fmt;
+                number = Math.floor(number / 12);
+            }
+            return fmt;
+        }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('clock').checked = true;
-    const clock_widget = new ClockWidget(document.getElementById('digital-clock'));
-    const timer_widget = new TimerWidget(document.getElementById('stopwatch'), {color: 'white'});
-    document.getElementById('clock').addEventListener('change', function() {
-        document.getElementById('tab-clock').classList.remove('hidden');
-        document.getElementById('tab-timer').classList.add('hidden');
-    });
-    document.getElementById('timer').addEventListener('change', function() {
-        document.getElementById('tab-clock').classList.add('hidden');
-        document.getElementById('tab-timer').classList.remove('hidden');
-        timer_widget.update_display();
-    });
-    document.getElementById('reset-timer').addEventListener('click', function() {
-        timer_widget.stop();
-    });
-});
-</script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('clock').checked = true;
+            const clock_widget = new ClockWidget(document.getElementById('digital-clock'));
+            const timer_widget = new TimerWidget(document.getElementById('stopwatch'), { color: 'white' });
+            document.getElementById('clock').addEventListener('change', function () {
+                document.getElementById('tab-clock').classList.remove('hidden');
+                document.getElementById('tab-timer').classList.add('hidden');
+            });
+            document.getElementById('timer').addEventListener('change', function () {
+                document.getElementById('tab-clock').classList.add('hidden');
+                document.getElementById('tab-timer').classList.remove('hidden');
+                timer_widget.update_display();
+            });
+            document.getElementById('reset-timer').addEventListener('click', function () {
+                timer_widget.stop();
+            });
+        });
+    </script>
 </head>
+
 <body>
     <div id="navbar">
         <input type="radio" name="tab" id="clock" checked><label for="clock">Clock</label>
@@ -53,4 +55,5 @@ document.addEventListener('DOMContentLoaded', function() {
         <div id="reset-timer">Reset</div>
     </div>
 </body>
+
 </html>
