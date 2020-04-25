@@ -11,7 +11,7 @@ wanted the time units to be friendly to calculations in base 10.
 This clock demonstrates how time-keeping would be if we used the original base, and have 5 dozen seconds per
 minute and 5 dozen minutes per hour.
 
-The first digits are the usal 0-9, and we add X to represent ten and Ԑ to represent eleven.
+The first digits are the usal `0`-`9`, and we add `X` to represent ten and `Ԑ` to represent eleven.
 
 Another advantage of this system is that the AM/PM distinction is denoted by the higher digit of the hours.
 Which means, e.g. that "13 o'clock" is always 3 past noon, and you don't have to subtract in your head to convert.
