@@ -10,7 +10,7 @@ function TimerWidget(element, options) {
     this.update_display();
     // FIXME: should listen to the "resize" event on the element, but this doesn't work for some reason
     window.addEventListener('resize', this.update_display.bind(this));
-    this._element.addEventListener('mouseup', this._on_click.bind(this));
+    this._element.addEventListener('mouseup', this.play_or_pause.bind(this));
 }
 
 TimerWidget.prototype = {
@@ -147,7 +147,7 @@ TimerWidget.prototype = {
         this.update_display();
     },
 
-    _on_click: function () {
+    play_or_pause: function () {
         if (this._interval_id === null) {
             this.play();
         } else {

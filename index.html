@@ -40,6 +40,28 @@
             document.getElementById('reset-timer').addEventListener('click', function () {
                 timer_widget.stop();
             });
+            window.addEventListener('keyup', function(e) {
+                switch (e.key) {
+                    case 'ArrowLeft':
+                        document.getElementById('clock').checked = true;
+                        document.getElementById('tab-clock').classList.remove('hidden');
+                        document.getElementById('tab-timer').classList.add('hidden');
+                        break;
+
+                    case 'ArrowRight':
+                        document.getElementById('timer').checked = true;
+                        document.getElementById('tab-clock').classList.add('hidden');
+                        document.getElementById('tab-timer').classList.remove('hidden');
+                        timer_widget.update_display();
+                        break;
+
+                    case ' ':
+                        if (document.getElementById('timer').checked) {
+                            timer_widget.play_or_pause();
+                        }
+                        break;
+                }
+            });
         });
     </script>
 </head>
