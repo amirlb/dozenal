@@ -87,13 +87,13 @@
                     y: e.touches[0].screenY,
                 };
 
-                if (swipe_now.time > swipe_then.time + 2000) {
+                if (swipe_now.time > swipe_then.time + 200000) {
                     return;
                 }
-                if (Math.abs(swipe_now.y - swipe_then.y) > window.screen.height / 4) {
+                if (Math.abs(swipe_now.y - swipe_then.y) > window.screen.height / 0.4) {
                     return;
                 }
-                if (Math.abs(swipe_now.x - swipe_then.x) < window.screen.width / 3) {
+                if (Math.abs(swipe_now.x - swipe_then.x) < window.screen.width / 3000) {
                     return;
                 }
                 if (swipe_now.x < swipe_then.x) {
