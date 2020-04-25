@@ -75,10 +75,11 @@
                 swipe_start = null;
             });
             window.addEventListener('touchend', function(e) {
-                if (swipe_start === null) {
+                const swipe_then = swipe_start;
+                swipe_start = null;
+                if (swipe_then === null) {
                     return;
                 }
-                swipe_start = null;
 
                 const swipe_now = {
                     time: Date.now(),
@@ -86,16 +87,16 @@
                     y: e.touches[0].screenY,
                 };
 
-                if (swipe_now.time > swipe_start.time + 2000) {
+                if (swipe_now.time > swipe_then.time + 2000) {
                     return;
                 }
-                if (Math.abs(swipe_now.y - swipe_start.y) > window.screen.height / 4) {
+                if (Math.abs(swipe_now.y - swipe_then.y) > window.screen.height / 4) {
                     return;
                 }
-                if (Math.abs(swipe_now.x - swipe_start.x) < window.screen.width / 3) {
+                if (Math.abs(swipe_now.x - swipe_then.x) < window.screen.width / 3) {
                     return;
                 }
-                if (swipe_now.x < swipe_start.x) {
+                if (swipe_now.x < swipe_then.x) {
                     document.getElementById('clock').checked = true;
                     document.getElementById('tab-clock').classList.remove('hidden');
                     document.getElementById('tab-timer').classList.add('hidden');
