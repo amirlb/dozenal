@@ -19,7 +19,7 @@ body {
     padding: 3vmin;
     text-align: center;
     font-family: 'Verdana', sans-serif;
-    font-size: 6vmin;
+    font-size: 8vmin;
 }
 
 input[type="radio"][name="tab"] {
