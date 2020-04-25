@@ -15,24 +15,30 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('fetch', function (e) {
     e.respondWith(
-        caches.open('v1').then(async function(cache) {
-            const cache_response = await cache.match(e.request);
-            if (cache_response) {
-                return cache_response;
-            }
-            else {
-                const response = fetch(e.request);
-                await cache.put(e.request, (await response).clone());
-                return response;
-            }
+        caches.match(e.request).then((response) => {
+            return response || fetch(e.request);
         })
     );
+
+    // e.respondWith(
+    //     caches.open('v1').then(async function(cache) {
+    //         const cache_response = await cache.match(e.request);
+    //         if (cache_response) {
+    //             return cache_response;
+    //         }
+    //         else {
+    //             const response = fetch(e.request);
+    //             await cache.put(e.request, (await response).clone());
+    //             return response;
+    //         }
+    //     })
+    // );
+
     // e.respondWith(
     //     caches.open('v1').then(function(cache) {
     //         return cache.match(e.request);
     //     })
     // );
-
     // e.waitUntil(
     //     caches.open('v1').then(async function(cache) {
     //         const response = await fetch(e.request);

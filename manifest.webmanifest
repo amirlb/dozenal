@@ -10,6 +10,5 @@
         }
     ],
     "name": "Dozenal Clock",
-    "short_name": "Dozenal Clock",
     "start_url": "index.html"
   }

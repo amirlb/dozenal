@@ -41,6 +41,7 @@ input[type="radio"][name="tab"]:not(:checked) + label {
 #tab-clock {
     color: white;
     font-family: 'Fira Mono', monospace;
+    margin-bottom: 11vmin;
 }
 #tab-clock .minutes {
     font-size: 16vw;
@@ -64,10 +65,13 @@ input[type="radio"][name="tab"]:not(:checked) + label {
 }
 
 #reset-timer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
     padding: 2vmin;
     color: white;
     font-family: 'Verdana', sans-serif;
-    font-size: 4vmin;
+    font-size: 5vmin;
 }
 
 .timer-time-display {
