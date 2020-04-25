@@ -7,14 +7,10 @@ function TimerWidget (element, options) {
     this._last_update = null;
     this._interval_id = null;
     this._init_drawing();
-    this._update_display();
+    this.update_display();
     // FIXME: should listen to the "resize" event on the element, but this doesn't work for some reason
-    window.addEventListener('resize', this._update_display.bind(this));
+    window.addEventListener('resize', this.update_display.bind(this));
     this._element.addEventListener('click', this._on_click.bind(this));
-}
-
-TimerWidget.setup = function(element, options) {
-    element._timer_widget = new TimerWidget(element, options);
 }
 
 TimerWidget.prototype = {
@@ -44,7 +40,7 @@ TimerWidget.prototype = {
         this._element.appendChild(this._play_button);
     },
 
-    _update_display: function() {
+    update_display: function() {
         const box = this._element.getBoundingClientRect();
         const size = Math.min(box.width, box.height);
 
@@ -121,7 +117,7 @@ TimerWidget.prototype = {
         const now = Date.now();
         this._time += now - this._last_update;
         this._last_update = now;
-        this._update_display();
+        this.update_display();
     },
 
     play: function() {
@@ -130,7 +126,7 @@ TimerWidget.prototype = {
             this._time = 0;
         }
         this._interval_id = window.setInterval(this._update_time_and_display.bind(this), 20);
-        this._update_display();
+        this.update_display();
     },
 
     pause: function() {
@@ -141,12 +137,14 @@ TimerWidget.prototype = {
         }
     },
 
-    stop_if_paused: function() {
-        if (this._interval_id === null) {
-            this._last_update = null;
-            this._time = null;
-            this._update_display();
+    stop: function() {
+        if (this._interval_id !== null) {
+            window.clearInterval(this._interval_id);
+            this._interval_id = null;
         }
+        this._last_update = null;
+        this._time = null;
+        this.update_display();
     },
 
     _on_click: function() {

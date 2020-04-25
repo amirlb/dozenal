@@ -22,23 +22,35 @@ function formatDozenal(number, digits) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    ClockWidget.setup(document.getElementById('digital-clock'), {show_seconds: false});
-    TimerWidget.setup(document.getElementById('stopwatch'), {color: '#ffffff'});
-    document.getElementById('stopwatch-icon').addEventListener('click', function() {
-        const timer = document.getElementById('stopwatch')._timer_widget;
-        timer.stop_if_paused();
+    document.getElementById('clock').checked = true;
+    const clock_widget = new ClockWidget(document.getElementById('digital-clock'), {show_seconds: false});
+    const timer_widget = new TimerWidget(document.getElementById('stopwatch'), {color: 'white'});
+    document.getElementById('clock').addEventListener('change', function() {
+        document.getElementById('tab-clock').classList.remove('hidden');
+        document.getElementById('tab-timer').classList.add('hidden');
+    });
+    document.getElementById('timer').addEventListener('change', function() {
+        document.getElementById('tab-clock').classList.add('hidden');
+        document.getElementById('tab-timer').classList.remove('hidden');
+        timer_widget.update_display();
+    });
+    document.getElementById('reset-timer').addEventListener('click', function() {
+        timer_widget.stop();
     });
 });
 </script>
 </head>
 <body>
-    <div class="widget-box">
-        Clock<br/>
+    <div id="navbar">
+        <input type="radio" name="tab" id="clock" checked><label for="clock">Clock</label>
+        <input type="radio" name="tab" id="timer"><label for="timer">Timer</label>
+    </div>
+    <div id="tab-clock">
         <span id="digital-clock"></span>
     </div>
-    <div class="widget-box" id="widget-analog">
-        <p>Timer <span id="stopwatch-icon">⏱️</span></p>
+    <div id="tab-timer" class="hidden">
         <svg id="stopwatch"></svg>
+        <div id="reset-timer">Reset</div>
     </div>
 </body>
 </html>

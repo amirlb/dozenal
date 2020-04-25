@@ -6,10 +6,6 @@ function ClockWidget (element, options) {
     this._show_and_loop();
 }
 
-ClockWidget.setup = function(element, options) {
-    element._clock_widget = new ClockWidget(element, options);
-}
-
 ClockWidget.prototype = {
     _show_and_loop: function() {
         const now = new Date();
