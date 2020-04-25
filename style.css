@@ -20,16 +20,14 @@ body {
     text-align: center;
     font-family: 'Verdana', sans-serif;
     font-size: 8vmin;
+    color: white;
 }
 
 input[type="radio"][name="tab"] {
     display: none;
 }
 input[type="radio"][name="tab"]:not(:checked) + label {
-    color: lightgray;
-}
-input[type="radio"][name="tab"]:checked + label {
-    color: white;
+    opacity: 0.5;
 }
 
 .hidden {
