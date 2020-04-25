@@ -64,40 +64,42 @@
             });
 
             let swipe_start = null;
-            window.addEventListener('touchstart', function(e) {
-                swipe_start = {
+            let swipe_now = null;
+            const on_touch_move = function(e) {
+                swipe_now = {
                     time: Date.now(),
-                    x: e.touches[0].screenX,
-                    y: e.touches[0].screenY,
+                    x: e.touches[0].clientX,
+                    y: e.touches[0].clientY,
                 };
+            }
+            window.addEventListener('touchstart', function(e) {
+                swipe_start = swipe_now = {
+                    time: Date.now(),
+                    x: e.touches[0].clientX,
+                    y: e.touches[0].clientY,
+                };
+                window.addEventListener('touchmove', on_touch_move);
             });
             window.addEventListener('touchcancel', function(e) {
+                window.removeEventListener('touchmove', on_touch_move);
                 swipe_start = null;
+                swipe_now = null;
             });
             window.addEventListener('touchend', function(e) {
-                const swipe_then = swipe_start;
-                swipe_start = null;
-                if (swipe_then === null) {
+                window.removeEventListener('touchmove', on_touch_move);
+                if (swipe_start === null || swipe_now === null) {
                     return;
                 }
-
-                const swipe_now = {
-                    time: Date.now(),
-                    x: e.touches[0].screenX,
-                    y: e.touches[0].screenY,
-                };
-                alert([swipe_now.x, swipe_then.x]);
-
-                if (swipe_now.time > swipe_then.time + 200000) {
+                if (swipe_now.time > swipe_start.time + 2000) {
                     return;
                 }
-                if (Math.abs(swipe_now.y - swipe_then.y) > window.screen.height / 0.4) {
+                if (Math.abs(swipe_now.y - swipe_start.y) > window.innerHeight / 4) {
                     return;
                 }
-                if (Math.abs(swipe_now.x - swipe_then.x) < window.screen.width / 3000) {
+                if (Math.abs(swipe_now.x - swipe_start.x) < window.innerWidth / 3) {
                     return;
                 }
-                if (swipe_now.x < swipe_then.x) {
+                if (swipe_now.x > swipe_start.x) {
                     document.getElementById('clock').checked = true;
                     document.getElementById('tab-clock').classList.remove('hidden');
                     document.getElementById('tab-timer').classList.add('hidden');
