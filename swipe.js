@@ -16,11 +16,11 @@ SwipeDetector.prototype = {
     LONG_VERTICAL: 0.25,
     SHORT_HORIZONTAL: 0.3,
 
-    add_callback: function(cb) {
+    add_callback: function (cb) {
         this.callbacks.push(cb);
     },
 
-    on_touch_start: function(e) {
+    on_touch_start: function (e) {
         this.touch_start = this.touch_now = {
             time: Date.now(),
             x: e.touches[0].clientX,
@@ -29,7 +29,7 @@ SwipeDetector.prototype = {
         window.addEventListener('touchmove', this.touch_move_handler);
     },
 
-    on_touch_move: function(e) {
+    on_touch_move: function (e) {
         this.touch_now = {
             time: Date.now(),
             x: e.touches[0].clientX,
@@ -37,13 +37,13 @@ SwipeDetector.prototype = {
         };
     },
 
-    on_touch_cancel: function() {
+    on_touch_cancel: function () {
         window.removeEventListener('touchmove', this.touch_move_handler);
         this.touch_start = null;
         this.touch_now = null;
     },
 
-    on_touch_end: function() {
+    on_touch_end: function () {
         window.removeEventListener('touchmove', this.touch_move_handler);
         if (this.touch_start === null || this.touch_now === null) {
             return;
@@ -58,7 +58,7 @@ SwipeDetector.prototype = {
             return;
         }
         const direction = this.touch_now.x < this.touch_start.x ? 'left' : 'right';
-        this.callbacks.forEach(function(cb) {
+        this.callbacks.forEach(function (cb) {
             cb(direction);
         });
     }

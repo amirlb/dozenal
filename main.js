@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('choose-timer').addEventListener('click', choose_timer);
     document.getElementById('reset-timer').addEventListener('click', timer_widget.stop.bind(timer_widget));
 
-    window.addEventListener('keyup', function(e) {
+    window.addEventListener('keyup', function (e) {
         if (e.key === 'ArrowLeft')
             choose_clock();
         if (e.key === 'ArrowRight')
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const swipe_detector = new SwipeDetector();
-    swipe_detector.add_callback(function(direction) {
+    swipe_detector.add_callback(function (direction) {
         if (direction === 'left')
             choose_clock();
         if (direction === 'right')
