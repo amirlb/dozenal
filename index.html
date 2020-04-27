@@ -9,115 +9,14 @@
     <link rel="icon" href="icon.png" type="image/png">
     <script src="clock.js"></script>
     <script src="timer.js"></script>
-    <script>
-        "use strict";
-
-        Math.TAU = Math.PI * 2;
-
-        function formatDozenal(number, digits) {
-            const DIGITS = 'O123456789XԐ';
-            let fmt = '';
-            while (digits-- > 0 || number) {
-                fmt = DIGITS[number % 12] + fmt;
-                number = Math.floor(number / 12);
-            }
-            return fmt;
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('clock').checked = true;
-            const clock_widget = new ClockWidget(document.getElementById('digital-clock'));
-            const timer_widget = new TimerWidget(document.getElementById('stopwatch'), { color: 'white' });
-            document.getElementById('clock').addEventListener('change', function () {
-                document.getElementById('tab-clock').classList.remove('hidden');
-                document.getElementById('tab-timer').classList.add('hidden');
-            });
-            document.getElementById('timer').addEventListener('change', function () {
-                document.getElementById('tab-clock').classList.add('hidden');
-                document.getElementById('tab-timer').classList.remove('hidden');
-                timer_widget.update_display();
-            });
-            document.getElementById('reset-timer').addEventListener('click', function () {
-                timer_widget.stop();
-            });
-            window.addEventListener('keyup', function(e) {
-                switch (e.key) {
-                    case 'ArrowLeft':
-                        document.getElementById('clock').checked = true;
-                        document.getElementById('tab-clock').classList.remove('hidden');
-                        document.getElementById('tab-timer').classList.add('hidden');
-                        break;
-
-                    case 'ArrowRight':
-                        document.getElementById('timer').checked = true;
-                        document.getElementById('tab-clock').classList.add('hidden');
-                        document.getElementById('tab-timer').classList.remove('hidden');
-                        timer_widget.update_display();
-                        break;
-
-                    case ' ':
-                        if (document.getElementById('timer').checked) {
-                            timer_widget.play_or_pause();
-                        }
-                        break;
-                }
-            });
-
-            let swipe_start = null;
-            let swipe_now = null;
-            const on_touch_move = function(e) {
-                swipe_now = {
-                    time: Date.now(),
-                    x: e.touches[0].clientX,
-                    y: e.touches[0].clientY,
-                };
-            }
-            window.addEventListener('touchstart', function(e) {
-                swipe_start = swipe_now = {
-                    time: Date.now(),
-                    x: e.touches[0].clientX,
-                    y: e.touches[0].clientY,
-                };
-                window.addEventListener('touchmove', on_touch_move);
-            });
-            window.addEventListener('touchcancel', function(e) {
-                window.removeEventListener('touchmove', on_touch_move);
-                swipe_start = null;
-                swipe_now = null;
-            });
-            window.addEventListener('touchend', function(e) {
-                window.removeEventListener('touchmove', on_touch_move);
-                if (swipe_start === null || swipe_now === null) {
-                    return;
-                }
-                if (swipe_now.time > swipe_start.time + 2000) {
-                    return;
-                }
-                if (Math.abs(swipe_now.y - swipe_start.y) > window.innerHeight / 4) {
-                    return;
-                }
-                if (Math.abs(swipe_now.x - swipe_start.x) < window.innerWidth / 3) {
-                    return;
-                }
-                if (swipe_now.x > swipe_start.x) {
-                    document.getElementById('clock').checked = true;
-                    document.getElementById('tab-clock').classList.remove('hidden');
-                    document.getElementById('tab-timer').classList.add('hidden');
-                } else {
-                    document.getElementById('timer').checked = true;
-                    document.getElementById('tab-clock').classList.add('hidden');
-                    document.getElementById('tab-timer').classList.remove('hidden');
-                    timer_widget.update_display();
-                }
-            });
-        });
-    </script>
+    <script src="swipe.js"></script>
+    <script src="main.js"></script>
 </head>
 
 <body>
     <div id="navbar">
-        <input type="radio" name="tab" id="clock" checked><label for="clock">Clock</label>
-        <input type="radio" name="tab" id="timer"><label for="timer">Timer</label>
+        <span id="choose-clock" class="selected">Clock</span>
+        <span id="choose-timer">Timer</span>
     </div>
     <div id="tab-clock">
         <span id="digital-clock"></span>

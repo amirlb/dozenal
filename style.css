@@ -14,20 +14,17 @@ body {
 #navbar {
     display: flex;
 }
-#navbar > label {
+#navbar > span {
     flex-grow: 1;
     padding: 3vmin;
     text-align: center;
     font-family: 'Verdana', sans-serif;
     font-size: 8vmin;
     color: white;
-}
-
-input[type="radio"][name="tab"] {
-    display: none;
-}
-input[type="radio"][name="tab"]:not(:checked) + label {
     opacity: 0.5;
+}
+#navbar > span.selected {
+    opacity: 1;
 }
 
 .hidden {
