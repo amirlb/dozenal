@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const swipe_detector = new SwipeDetector();
     swipe_detector.add_callback(function (direction) {
         if (direction === 'left')
-            choose_clock();
-        if (direction === 'right')
             choose_timer();
+        if (direction === 'right')
+            choose_clock();
     });
 });
