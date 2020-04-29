@@ -6,6 +6,10 @@ html, body {
     background: linear-gradient(150deg, orangered, orange);
 }
 
+html {
+    touch-action: none;
+}
+
 body {
     display: flex;
     flex-direction: column;
