@@ -12,18 +12,13 @@ html {
 body {
     background: linear-gradient(150deg, orangered, orange);
     display: flex;
-    flex-direction: column-reverse;
-}
-
-#container {
-    height: 100%;
-    max-height: calc(100vmax - 4vh);
-    display: flex;
     flex-direction: column;
 }
 
 #navbar {
     display: flex;
+    height: 18vh;
+    align-items: flex-end;
 }
 #navbar > span {
     flex-grow: 1;
