@@ -1,0 +1,14 @@
+{
+    "background_color": "orange",
+    "description": "Dozenal (base twelve) clock and stopwatch timer.",
+    "display": "fullscreen",
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "name": "Dozenal Clock",
+    "start_url": "index.html"
+  }
