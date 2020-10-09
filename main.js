@@ -21,7 +21,7 @@ function fix_navbar() {
         document.getElementById('choose-timer').classList.add('selected');
         document.getElementById('choose-clock').classList.remove('selected');
     }
-    document.getElementById('reset-timer').style.transform = `translate(0, ${10*(1-fraction)}vmin)`;
+    document.getElementById('reset-timer').style.transform = `translate(0, ${20*(1-fraction)}vmin)`;
     document.getElementById('tabs-container').focus();
 }
 
