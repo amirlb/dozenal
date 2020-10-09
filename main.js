@@ -13,15 +13,15 @@ function formatDozenal(number, digits) {
 }
 
 function fix_navbar() {
-    const scroll = document.getElementById('tabs-container').scrollLeft;
-    const midpoint = (document.getElementById('tab-clock').offsetLeft + document.getElementById('tab-timer').offsetLeft) / 2;
-    if (scroll < midpoint) {
+    const fraction = document.getElementById('tabs-container').scrollLeft / document.getElementById('tab-timer').offsetLeft;
+    if (fraction < 0.5) {
         document.getElementById('choose-clock').classList.add('selected');
         document.getElementById('choose-timer').classList.remove('selected');
     } else {
         document.getElementById('choose-timer').classList.add('selected');
         document.getElementById('choose-clock').classList.remove('selected');
     }
+    document.getElementById('reset-timer').style.transform = `translate(0, ${10*(1-fraction)}vmin)`;
     document.getElementById('tabs-container').focus();
 }
 
