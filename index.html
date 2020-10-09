@@ -9,21 +9,22 @@
     <link href="style.css" rel="stylesheet">
     <script src="clock.js"></script>
     <script src="timer.js"></script>
-    <script src="swipe.js"></script>
     <script src="main.js"></script>
 </head>
 
 <body>
     <div id="navbar">
-        <span id="choose-clock" class="selected">Clock</span>
+        <span id="choose-clock">Clock</span>
         <span id="choose-timer">Timer</span>
     </div>
-    <div id="tab-clock">
-        <span id="digital-clock"></span>
-    </div>
-    <div id="tab-timer" class="hidden">
-        <svg id="stopwatch"></svg>
-        <div id="reset-timer">Reset</div>
+    <div id="tabs-container">
+        <div id="tab-clock">
+            <span id="digital-clock"></span>
+        </div>
+        <div id="tab-timer">
+            <svg id="stopwatch"></svg>
+            <div id="reset-timer">Reset</div>
+        </div>
     </div>
 </body>
 

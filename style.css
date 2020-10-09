@@ -32,18 +32,29 @@ body {
     opacity: 1;
 }
 
-.hidden {
-    display: none;
+#tabs-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    outline: none;
 }
 
-#tab-clock, #tab-timer {
-    flex-grow: 1;
+#tabs-container > div {
+    flex: 0 0 100vw;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
 }
 
 #tab-clock {
     color: white;
     font-family: 'Fira Mono', monospace;
     margin-bottom: 11vmin;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #tab-clock .minutes {
     font-size: 16vw;
@@ -51,23 +62,14 @@ body {
 #tab-clock .seconds {
     font-size: 12vw;
 }
-#tab-clock:not(.hidden) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#tab-timer:not(.hidden) {
-    display: flex;
-    flex-direction: column;
-}
 
 #stopwatch {
-    flex-grow: 1;
+    width: 100%;
+    height: 100%;
 }
 
 #reset-timer {
-    position: fixed;
+    position: sticky;
     left: 0;
     bottom: 0;
     padding: 2vmin;
