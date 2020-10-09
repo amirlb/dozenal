@@ -41,7 +41,12 @@ TimerWidget.prototype = {
     },
 
     update_display: function () {
-        const box = this._element.getBoundingClientRect();
+        // This should've been element.getBoundingClientRect(), but for some reason that updates very
+        // slowly after the orientation change when there's a color transition in the navbar
+        const box = {
+            width: window.innerWidth,
+            height: window.innerHeight * 0.95 - Math.min(window.innerWidth, window.innerHeight) * 0.13
+        };
         const size = Math.min(box.width, box.height);
 
         this._text_group.setAttribute('x', box.width * 0.5 - size * 0.25);
