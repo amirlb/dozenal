@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const timer_widget = new TimerWidget(document.getElementById('stopwatch'), { color: 'white' });
 
     document.getElementById('tabs-container').addEventListener('scroll', fix_navbar);
+    document.getElementById('tabs-container').addEventListener('wheel', fix_navbar);
     fix_navbar();
 
     document.getElementById('choose-clock').addEventListener('click', function() {
