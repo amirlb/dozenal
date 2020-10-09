@@ -14,11 +14,11 @@ function formatDozenal(number, digits) {
 
 function fix_navbar() {
     const scroll = document.getElementById('tabs-container').scrollLeft;
-    if (scroll === document.getElementById('tab-clock').offsetLeft) {
+    const midpoint = (document.getElementById('tab-clock').offsetLeft + document.getElementById('tab-timer').offsetLeft) / 2;
+    if (scroll < midpoint) {
         document.getElementById('choose-clock').classList.add('selected');
         document.getElementById('choose-timer').classList.remove('selected');
-    }
-    if (scroll === document.getElementById('tab-timer').offsetLeft) {
+    } else {
         document.getElementById('choose-timer').classList.add('selected');
         document.getElementById('choose-clock').classList.remove('selected');
     }

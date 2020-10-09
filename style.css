@@ -30,6 +30,7 @@ body {
 }
 #navbar > span.selected {
     opacity: 1;
+    transition: 200ms;
 }
 
 #tabs-container {
