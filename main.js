@@ -22,7 +22,6 @@ function fix_navbar() {
         document.getElementById('choose-clock').classList.remove('selected');
     }
     document.getElementById('reset-timer').style.transform = `translate(0, ${20*(1-fraction)}vmin)`;
-    document.getElementById('tabs-container').focus();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -41,14 +40,25 @@ document.addEventListener('DOMContentLoaded', function () {
         timer_widget.update_display();
         document.getElementById('tab-timer').scrollIntoView({behavior: 'smooth'});
     });
-    document.getElementById('tab-clock').addEventListener('scroll', function() {console.log('clock');});
-    document.getElementById('tab-timer').addEventListener('scroll', function() {console.log('timer');});
-    document.getElementById('reset-timer').addEventListener('click', timer_widget.stop.bind(timer_widget));
+    document.getElementById('reset-timer').addEventListener('click', function() {
+        timer_widget.stop();
+    });
 
     window.addEventListener('keyup', function (e) {
-        if (e.key === ' ') {
-            if (document.getElementById('choose-timer').classList.contains('selected'))
-                timer_widget.play_or_pause();
+        switch (e.key) {
+            case 'ArrowLeft':
+                document.getElementById('tab-clock').scrollIntoView({behavior: 'smooth'});
+                break
+
+            case 'ArrowRight':
+                timer_widget.update_display();
+                document.getElementById('tab-timer').scrollIntoView({behavior: 'smooth'});
+                break;
+
+            case ' ':
+                if (document.getElementById('choose-timer').classList.contains('selected'))
+                    timer_widget.play_or_pause();
+                break;
         }
     });
 
