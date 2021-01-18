@@ -9,7 +9,8 @@ self.addEventListener('install', function (e) {
                 '/main.js',
                 '/clock.js',
                 '/timer.js',
-                '/icon.png',
+                '/icon-192.png',
+                '/icon-512.png',
             ]);
         })
     );
