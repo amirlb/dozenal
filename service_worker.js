@@ -4,9 +4,12 @@ self.addEventListener('install', function (e) {
     e.waitUntil(
         caches.open('v1').then(function (cache) {
             return cache.addAll([
-                './index.html',
-                './style.css',
-                './index.js',
+                '/index.html',
+                '/style.css',
+                '/main.js',
+                '/clock.js',
+                '/timer.js',
+                '/icon.png',
             ]);
         })
     );
