@@ -4,38 +4,38 @@ self.addEventListener('install', function (e) {
     e.waitUntil(
         caches.open('v1').then(function (cache) {
             return cache.addAll([
-                '/index.html',
-                '/style.css',
-                '/main.js',
-                '/clock.js',
-                '/timer.js',
-                '/icon-192.png',
-                '/icon-512.png',
+                '/dozenal/index.html',
+                '/dozenal/style.css',
+                '/dozenal/main.js',
+                '/dozenal/clock.js',
+                '/dozenal/timer.js',
+                '/dozenal/icon-192.png',
+                '/dozenal/icon-512.png'
             ]);
         })
     );
 });
 
 self.addEventListener('fetch', function (e) {
-    e.respondWith(
-        caches.match(e.request).then((response) => {
-            return response || fetch(e.request);
-        })
-    );
-
     // e.respondWith(
-    //     caches.open('v1').then(async function(cache) {
-    //         const cache_response = await cache.match(e.request);
-    //         if (cache_response) {
-    //             return cache_response;
-    //         }
-    //         else {
-    //             const response = fetch(e.request);
-    //             await cache.put(e.request, (await response).clone());
-    //             return response;
-    //         }
+    //     caches.match(e.request).then((response) => {
+    //         return response || fetch(e.request);
     //     })
     // );
+
+    e.respondWith(
+        caches.open('v1').then(async function(cache) {
+            const cache_response = await cache.match(e.request);
+            if (cache_response) {
+                return cache_response;
+            }
+            else {
+                const response = fetch(e.request);
+                await cache.put(e.request, (await response).clone());
+                return response;
+            }
+        })
+    );
 
     // e.respondWith(
     //     caches.open('v1').then(function(cache) {
