@@ -1,7 +1,7 @@
 {
     "background_color": "orange",
     "description": "Dozenal (base twelve) clock and stopwatch timer.",
-    "display": "fullscreen",
+    "display": "standalone",
     "icons": [
         {
             "src": "icon-192.png",
