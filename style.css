@@ -27,6 +27,7 @@ body {
     font-size: 8vmin;
     color: white;
     opacity: 0.5;
+    user-select: none;
 }
 #navbar > span.selected {
     opacity: 1;
